@@ -35,3 +35,16 @@
         finally got show working, forgot to add / before comment in the route in the app.js file
 
 5 comment new and create
+    
+    seems to be working
+
+6 comment edit and update
+
+    2 routes one for the form one for submitting the form
+
+    npm i method-override
+        require in app.js
+
+7 delete comment
+
+    

@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path'); // re quire path for app.set below
 const mongoose = require('mongoose');
+const methodOverride = require('method-override') // require after npm install
 const Comment = require('./models/comment') // require comment schema file from models dir
 
 mongoose.connect('mongodb://localhost:27017/talk-app', { // mongoose connection 
@@ -19,9 +20,10 @@ const app = express();
 
 
 app.set('view engine', 'ejs'); // set view engine to ejs
-app.set('views', path.join(__dirname, 'views')) // sets path to absolute
+app.set('views', path.join(__dirname, 'views')); // sets path to absolute
 
-app.use(express.urlencoded({ extended: true})) // tell express to parse the body
+app.use(express.urlencoded({ extended: true})); // tell express to parse the body
+app.use(methodOverride('_method'));
 
 app.get('/', (req, res) => { // home route
     res.render('home') // home.ejs
@@ -51,6 +53,13 @@ app.get('/comments/:id/edit', async(req, res) => { // edit route
     const comment = await Comment.findById(req.params.id) // find a comment with this id
     res.render('comments/edit', { comment }); // edit.ejs gives access to comment
 })
+
+app.put('/comments/:id', async(req, res)  => {
+    const { id } = req.params;
+    const comment = await Comment.findByIdAndUpdate(id, { ...req.body.comment});
+    res.redirect(`/comments/${comment._id}`)
+})
+
 
 app.listen(3000, () => {
     console.log('Serving on port 3000')
