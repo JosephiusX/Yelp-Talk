@@ -8,6 +8,9 @@
 </head>
 <body>
     <h1>All Comments</h1>
+    <div>
+        <a href="/comments/new ">Add Comment</a>
+    </div>
     <ul>
         <% for (let comment of comments) {%>
             <li><a href="/comments/<%= comment._id %>"><%= comment.phrase %></a></li>
