@@ -10,6 +10,11 @@
 <body>
     <h1><%= comment.topic %></h1>
     <h2><%= comment.phrase %></h2>
+    <p><a href="/comments/<%=comment._id %>/edit"></a>
+</p>
+    <footer>
+        <a href="/comments">All Comments</a>
+    </footer>
     
 </body>
 </html>

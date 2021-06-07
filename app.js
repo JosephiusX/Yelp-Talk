@@ -18,9 +18,10 @@ db.once("open", () => {
 const app = express();
 
 
-
 app.set('view engine', 'ejs'); // set view engine to ejs
 app.set('views', path.join(__dirname, 'views')) // sets path to absolute
+
+app.use(express.urlencoded({ extended: true})) // tell express to parse the body
 
 app.get('/', (req, res) => {
     res.render('home')
@@ -31,9 +32,24 @@ app.get('/comments', async(req, res) => {
     res.render('comments/index', {comments})
 })
 
-app.get('comments/:id', async (req, res) => {
+app.get('/comments/new', (req, res) => {
+    res.render('comments/new')
+})
+
+app.post('/comments', async(req, res) => {
+    const comment = new Comment(req.body.comment);
+    await comment.save();
+    res.redirect(`/comments/${comment._id}`)
+})
+
+app.get('/comments/:id', async(req, res) => { // show route
     const comment = await Comment.findById(req.params.id)
     res.render('comments/show', { comment })
+})
+
+app.get('/comments/:id/edit', async(req, res) => {
+    const comment = await Comment.findById(req.params.id)
+    res.render('comments/edit', { comment })
 })
 
 app.listen(3000, () => {

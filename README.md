@@ -31,4 +31,7 @@
         in comments make index.ejs file
 
 4 Comment Show
-    
+
+        finally got show working, forgot to add / before comment in the route in the app.js file
+
+5 comment new and create
