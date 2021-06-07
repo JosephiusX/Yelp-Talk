@@ -24,3 +24,11 @@
                 then in mongo shell to see if comment saved:
             >use talk-app
             db.comments.find()
+
+3 comment index
+
+        mkdir comments
+        in comments make index.ejs file
+
+4 Comment Show
+    
