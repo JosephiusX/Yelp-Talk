@@ -54,10 +54,16 @@ app.get('/comments/:id/edit', async(req, res) => { // edit route
     res.render('comments/edit', { comment }); // edit.ejs gives access to comment
 })
 
-app.put('/comments/:id', async(req, res)  => {
+app.put('/comments/:id', async(req, res)  => { // submit edited route
     const { id } = req.params;
     const comment = await Comment.findByIdAndUpdate(id, { ...req.body.comment});
     res.redirect(`/comments/${comment._id}`)
+})
+
+app.delete('/comments/:id', async (req, res) => {
+    const { id } = req.params;
+    await Comment.findByIdAndDelete(id);
+    res.redirect('/comments');
 })
 
 
