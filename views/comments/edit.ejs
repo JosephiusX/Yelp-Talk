@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit Comment</title>
+  </head>
+  <body>
+    <h1>Edit Comment</h1>
+    <form action="/comments/<%=comment._id%>?_method=PUT" method="POST">
+      <div>
+        <label for="topic">Topic</label>
+        <input
+          type="type"
+          id="topic"
+          name="comment[topic]"
+          value="<%=comment.topic%>"
+        />
+      </div>
+      <div>
+        <label for="phrase">Phrase</label>
+        <input
+          type="type"
+          id="phrase"
+          name="comment[phrase]"
+          value="<%=comment.phrase%>"
+        />
+      </div>
+      <button>Update Comment</button>
+      <a href="/comments/<%= comment._id%>">Back To Comment</a>
+    </form>
+  </body>
+</html>

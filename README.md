@@ -1,5 +1,6 @@
 # Yelp-Talk
-1 basic express app
+
+basic express app
 
         npm i express mongoose ejs
         require express
@@ -8,7 +9,7 @@
         set view engine to be ejs
         set views path to be absolute
 
-2 model basics
+model basics
 
         mkdir models
         in models: touch comments.js
@@ -25,26 +26,66 @@
             >use talk-app
             db.comments.find()
 
-3 comment index
+comment index
 
         mkdir comments
         in comments make index.ejs file
 
-4 Comment Show
+Comment Show
 
         finally got show working, forgot to add / before comment in the route in the app.js file
 
-5 comment new and create
-    
-    seems to be working
+comment new and create
 
-6 comment edit and update
+    `seems to be working
 
-    2 routes one for the form one for submitting the form
+comment edit and update
 
-    npm i method-override
+        2 routes one for the form one for submitting the form
+
+        npm i method-override
         require in app.js
 
-7 delete comment
+delete comment
 
-    seems to be working with the help of method-override
+        seems to be working with the help of method-override
+
+        *************************
+
+setting up user Schema
+
+        in models touch user.js
+        require mongoose
+        require User for association
+
+User validation
+
+setting up user route (endpoints)
+
+        test with postman, placing the json User object in the req body
+        we should get a 202 and send testing ( it was sent but not saved yet so nothing will be in db yet)
+
+        automatically parse incoming jason in the app.js file:
+                 app.use(express.json())
+
+organizing routes directory
+
+        mkdir routers
+                in it touch comments.js
+                cut comment routes from index to comments.js file
+                require express, comment schema and,  express router.
+                change all instances of app to router
+                export router at the bottom of the page
+                app.use comment
+                require it in the app.js file
+
+        repeat for user
+                require userSchema in route file so it can be used in the routes
+
+move mongoose connect
+
+                make db dir and touch mongoose.js in it
+                require mongoose in that file
+
+                in app.js require mongoose.js app without setting it to a variable:
+                        require("./db/mongoose")
