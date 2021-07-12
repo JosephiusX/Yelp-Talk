@@ -60,6 +60,9 @@ setting up user Schema
 
 User validation
 
+        npm i validator@10.9.0
+            require it in models files
+
 setting up user route (endpoints)
 
         test with postman, placing the json User object in the req body
