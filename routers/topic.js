@@ -39,6 +39,21 @@ router.put("/topics/:id", async (req, res) => {
   res.redirect(`/topics/${topic._id}`);
 });
 
+// Update topic by id
+router.patch("/topics/:id", async (req, res) => {
+  try {
+    const topic = await Topic.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true }); // the 3rd arg is the options, new: true - returns the new , runValidators: true - makesure format is right
+
+    if (!topic) {
+      return res.status(404).send();
+    }
+
+    res.send(topic);
+  } catch (e) {
+    res.status(400).send(e);
+  }
+});
+
 // delete topic by id
 router.delete("/topics/:id", async (req, res) => {
   const { id } = req.params;
