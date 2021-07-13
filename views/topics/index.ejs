@@ -4,17 +4,18 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Comments</title>
+    <title>Topics</title>
   </head>
   <body>
-    <h1>All Comments</h1>
+    <h1>All Topics</h1>
     <div>
-      <a href="/comments/new ">Add Comment</a>
+      <a href="/topics/new ">Add Topic</a>
     </div>
+
     <ul>
-      <% for (let comment of comments) {%>
+      <% for (let topic of topics) {%>
       <li>
-        <a href="/comments/<%= comment._id %>"><%= comment.phrase%></a>
+        <a href="/topics/<%= topic._id %>"><%= topic.topic%></a>
       </li>
       <% } %>
     </ul>

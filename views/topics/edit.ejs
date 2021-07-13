@@ -8,27 +8,17 @@
   </head>
   <body>
     <h1>Edit Comment</h1>
-    <form action="/comments/<%=comment._id%>?_method=PUT" method="POST">
+    <form action="/phrases/<%=phrase._id%>?_method=PUT" method="POST">
       <div>
         <label for="topic">Topic</label>
-        <input
-          type="type"
-          id="topic"
-          name="comment[topic]"
-          value="<%=comment.topic%>"
-        />
+        <input type="type" id="topic" name="phrase" value="<%=phrase%>" />
       </div>
       <div>
         <label for="phrase">Phrase</label>
-        <input
-          type="type"
-          id="phrase"
-          name="comment[phrase]"
-          value="<%=comment.phrase%>"
-        />
+        <input type="type" id="phrase" name="phrase" value="<%=phrase%>" />
       </div>
       <button>Update Comment</button>
-      <a href="/comments/<%= comment._id%>">Back To Comment</a>
+      <a href="/phrases/<%= phrase._id%>">Back To Comment</a>
     </form>
   </body>
 </html>

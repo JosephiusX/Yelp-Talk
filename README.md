@@ -92,3 +92,8 @@ move mongoose connect
 
                 in app.js require mongoose.js app without setting it to a variable:
                         require("./db/mongoose")
+
+moving forward i think i need to split comments models into 2 models topic and phrase so that I can set up sanitization to ensure only one topic of a kind can be created.
+then I will need to associate a phrase with a topic as it is created.
+
+crud for topics is setup and working

@@ -8,16 +8,15 @@
 </head>
 
 <body>
-    <h1><%= comment.topic %></h1>
-    <h2><%= comment.phrase %></h2>
-    <p><a href="/comments/<%=comment._id %>/edit">Edit</a></p>
+    <h1><%= topic.topic %></h1>
+    <p><a href="/topics/<%=topic._id %>/edit">Edit</a></p>
     <p>
-        <form action="/comments/<%= comment._id%>?_method=DELETE" method="POST">
+        <form action="/topics/<%= topic._id%>?_method=DELETE" method="POST">
             <button>Delete</button>
         </form>
     </p>
     <footer>
-        <a href="/comments">All Comments</a>
+        <a href="/topics">All Topics</a>
     </footer>
     
 </body>

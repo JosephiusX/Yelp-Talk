@@ -5,7 +5,6 @@ const router = new express.Router();
 
 router.post("/users", async (req, res) => {
   const user = new User(req.body); // we take the information from the post body and set it to user
-
   try {
     await user.save();
     res.status(200).send(user);
