@@ -9,7 +9,7 @@
 
 <body>
     <h1><%= topic.topic %></h1>
-    <p><a href="/topics/<%=topic._id %>/edit">Edit</a></p>
+    <p><a href="/topics/<%=topic._id%>/edit">Edit</a></p>
     <p>
         <form action="/topics/<%= topic._id%>?_method=DELETE" method="POST">
             <button>Delete</button>

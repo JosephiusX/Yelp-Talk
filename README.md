@@ -96,12 +96,29 @@ move mongoose connect
 moving forward i think i need to split comments models into 2 models topic and phrase so that I can set up sanitization to ensure only one topic of a kind can be created.
 then I will need to associate a phrase with a topic as it is created.
 
-crud for topics is setup and working
+CRD for topics is setup and working ------- still need U
 
-crud for users is working now
+CRD for users is working now ------------- still need U
 
 need to setup postman routs for phrase routes to see if they are working properly
 
         mkdir phrases in views
+        in phrases dir touch edit index new and show ejs pages for phrases like they are setup for topics
 
-having trouble creating a phrase, it works with postman but ins not working on the page.
+having trouble creating a phrase, it works with postman but its not working on the page.
+
+                on postman :
+
+        create phrase works ------------------------------------------ POST /phrases redirects to show page
+        read phrases works ------------------------------------------- GET /phrases
+        read phrase works -------------------------------------------- GET /phrases/:id
+        delete phrase works ------------------------------------------ DELETE /phrases/:id
+
+                on local host :
+
+        create phrase dosent work --- /phrases/new directs to show , cannot POST /phrases/show ?? check the route and remove new maybe,
+        read phrases works,---------- /phrases
+        read phrase works,----------- /phrases/:id
+        delete phrases works -------- /phrases
+
+        FOUND THE ISSUE: on my phrases/show.ejs page the form action was set to phrases/show instead of phrases/new
