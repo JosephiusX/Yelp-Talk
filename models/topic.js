@@ -8,6 +8,11 @@ const TopicSchema = new Schema({
     unique: true,
     trim: true
   }
+  // ,
+  // owner: {
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   required: true
+  // }
 });
 
 module.exports = mongoose.model("Topic", TopicSchema);

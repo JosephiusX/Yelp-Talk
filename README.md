@@ -97,3 +97,7 @@ moving forward i think i need to split comments models into 2 models topic and p
 then I will need to associate a phrase with a topic as it is created.
 
 crud for topics is setup and working
+
+crud for users is working now
+
+need to setup postman routs for phrase routes to see if they are working properly
