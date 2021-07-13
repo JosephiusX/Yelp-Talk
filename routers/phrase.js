@@ -24,7 +24,7 @@ router.get("/phrases/new", (req, res) => {
   res.render("phrases/new"); // new.ejs
 });
 
-// view phrase by id
+// Read phrase by id
 router.get("/phrases/:id", async (req, res) => {
   const phrase = await Phrase.findById(req.params.id); // find the phrase with this id
   res.render("phrases/show", { phrase }); // show.ejs , gives access to phrase obj
@@ -41,6 +41,21 @@ router.put("/phrases/:id", async (req, res) => {
   const { id } = req.params;
   const phrase = await Phrase.findByIdAndUpdate(id, { ...req.body.phrase });
   res.redirect(`/phrases/${phrase._id}`);
+});
+
+// Update phrase by id
+router.patch("/phrases/:id", async (req, res) => {
+  try {
+    const phrase = await Phrase.findByIdAndUpdate(req.params.id, req.body, { new: true }); // the 3rd arg is the options, new: true - returns the new , runValidators: true - makesure format is right
+
+    if (!phrase) {
+      return res.status(404).send();
+    }
+
+    res.send(phrase);
+  } catch (e) {
+    res.status(400).send(e);
+  }
 });
 
 // delete phrase by id
