@@ -101,3 +101,7 @@ crud for topics is setup and working
 crud for users is working now
 
 need to setup postman routs for phrase routes to see if they are working properly
+
+        mkdir phrases in views
+
+having trouble creating a phrase, it works with postman but ins not working on the page.

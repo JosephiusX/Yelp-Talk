@@ -23,7 +23,7 @@ router.post("/phrases", async (req, res) => {
 // view phrase by id
 router.get("/phrases/:id", async (req, res) => {
   const phrase = await Phrase.findById(req.params.id); // find the phrase with this id
-  res.render("phrases/show", { phrase }); // show.ejs , gives accdss to phrase obj
+  res.render("phrases/show", { phrases }); // show.ejs , gives accdss to phrase obj
 });
 
 // find phrase by id and send to edit page
