@@ -145,4 +145,14 @@ now working on authentication and security
 
 now i need to refactor the topic and phrase update routes to be compatabe with middleware
 
+        added this to phrase and topic update routes:
+
+        const updates = Object.keys(req.body);
+        const allowedUpdates = ["name", "email", "password", "age"]; // edited this for phrase and topic 
+        const isValidOperation = updates.every((update) => allowedUpdates.includes(update));
+
+        not sure about what this code is doing
+
+        for both of those routes i setup the update routes the same way as for the user
+
 

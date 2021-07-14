@@ -1,5 +1,6 @@
 const express = require("express");
 const Phrase = require("../models/phrase"); // require comment schema file from models dir
+const User = require("../models/user");
 const router = new express.Router();
 
 // create new phrase
@@ -56,6 +57,7 @@ router.patch("/phrases/:id", async (req, res) => {
   try {
     const phrase = await Phrase.findById(req.params.id);
     updates.forEach((update) => phrase[update] = req.body[update])
+    await phrase.save()
     // const phrase = await Phrase.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true }); // the 3rd arg is the options, new: true - returns the new , runValidators: true - makesure format is right
 
     if (!phrase) {
