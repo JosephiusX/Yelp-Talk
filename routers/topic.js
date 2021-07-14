@@ -1,5 +1,6 @@
 const express = require("express");
 const Topic = require("../models/topic"); // require comment schema file from models dir
+const User = require("../models/user");
 const router = new express.Router();
 
 // creating a new topic
@@ -41,8 +42,19 @@ router.put("/topics/:id", async (req, res) => {
 
 // Update topic by id
 router.patch("/topics/:id", async (req, res) => {
+  const updates = Object.keys(req.body);
+  const allowedUpdates = ["topic"];
+  const isValidOperation = updates.every((update) => allowedUpdates.includes(update));
+
+  if(!isValidOperation) {
+    return res.status(400).send({ error: 'Invalid updates!'})
+  }
+
   try {
-    const topic = await Topic.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true }); // the 3rd arg is the options, new: true - returns the new , runValidators: true - makesure format is right
+    const topic = await Topic.findById(req.params.id);
+    updates.forEach((update) => topic[update] = req.body[update])
+    await topic.save()
+    // const topic = await Topic.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true }); // the 3rd arg is the options, new: true - returns the new , runValidators: true - makesure format is right
 
     if (!topic) {
       return res.status(404).send();

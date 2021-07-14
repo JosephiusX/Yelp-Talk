@@ -45,8 +45,18 @@ router.put("/phrases/:id", async (req, res) => {
 
 // Update phrase by id
 router.patch("/phrases/:id", async (req, res) => {
+  const updates = Object.keys(req.body);
+  const allowedUpdates = ["phrase"];
+  const isValidOperation = updates.every((update) => allowedUpdates.includes(update));
+
+  if(!isValidOperation) {
+    return res.status(400).send({ error: "Invalid updates"})
+  }
+
   try {
-    const phrase = await Phrase.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true }); // the 3rd arg is the options, new: true - returns the new , runValidators: true - makesure format is right
+    const phrase = await Phrase.findById(req.params.id);
+    updates.forEach((update) => phrase[update] = req.body[update])
+    // const phrase = await Phrase.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true }); // the 3rd arg is the options, new: true - returns the new , runValidators: true - makesure format is right
 
     if (!phrase) {
       return res.status(404).send();

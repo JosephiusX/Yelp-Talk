@@ -53,7 +53,11 @@ router.patch("/users/:id", async (req, res) => {
   }
 
   try {
-    const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
+    // thease 2 lines do the same as the one line below but dynamic so that it works even if the keys change over time
+    const user = await User.findById(req.params.id);
+    updates.forEach((update) => user[update] = req.body[update]);
+    await user.save()
+    // const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
 
     if (!user) {
       return res.status(404).send();
@@ -81,3 +85,4 @@ router.delete("/users/:id", async (req, res) => {
 });
 
 module.exports = router;
+

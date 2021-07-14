@@ -126,4 +126,23 @@ having trouble creating a phrase, it works with postman but its not working on t
 
 full crud for user is setup
 
-setting up update for Phrases and topics
+UPDATE is setup for topic phrase
+
+now working on authentication and security
+
+        passwords are currently stored in plain text ( not secure)
+
+        npm i bcrypt
+                require in app.js
+
+        setup pre middleware in user model
+
+        had to refactor update route to be compatable with middleware
+
+        add bcrypt logic to model middleware
+
+        import bcrypt in user model
+
+now i need to refactor the topic and phrase update routes to be compatabe with middleware
+
+
