@@ -155,4 +155,13 @@ now i need to refactor the topic and phrase update routes to be compatabe with m
 
         for both of those routes i setup the update routes the same way as for the user
 
+next step is to get login setup
+
+       in my user schema model i setup UserSchema.statics.findByCredentials middleware 
+       setup /users/login and use function above
+
+       set login route in postman for testing
+       drop users in db and create a new user
+       then with the credentials log in that user to test the login route
+
 

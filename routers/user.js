@@ -15,6 +15,15 @@ router.post("/users", async (req, res) => {
   }
 });
 
+router.post("/users/login", async (req, res) => {
+  try {
+    const user = await User.findByCredentials(req.body.email, req.body.password) // runs the middleware in models with thease arguments
+    res.send(user)
+  } catch (e) {
+    res.status(400).send()
+  }
+})
+
 // Read users
 router.get("/users", async (req, res) => {
   try {
@@ -44,12 +53,13 @@ router.get("/users/:id", async (req, res) => {
 
 // Update user
 router.patch("/users/:id", async (req, res) => {
-  const updates = Object.keys(req.body);
-  const allowedUpdates = ["name", "email", "password", "age"];
-  const isValidOperation = updates.every((update) => allowedUpdates.includes(update));
+  const updates = Object.keys(req.body); // convert our req.body object into an array of properties
+  const allowedUpdates = ["name", "email", "password", "age"]; // what is allowed to be updated
+  const isValidOperation = updates.every((update) => allowedUpdates.includes(update)); // can the updates be found in allowed updates
+  // updates.every is an array method , gets called for every update , it makes sure everything in array is one of the items in allowed updates array
 
-  if (!isValidOperation) {
-    return res.status(400).send({ error: "Invalid updates!" });
+  if (!isValidOperation) { // if any of the items we are trying to update arent one of the allowed updates, 
+    return res.status(400).send({ error: "Invalid updates!" }); // return error
   }
 
   try {
