@@ -26,19 +26,19 @@ router.post("/users/login", async (req, res) => {
   }
 })
 
-// Read users
-router.get("/users", auth, async (req, res) => {
-  try {
-    const users = await User.find({});
-    res.send(users);
-  } catch (e) {
-    res.status(500).send();
-  }
-});
+// // Read users
+// router.get("/users", auth, async (req, res) => {
+//   try {
+//     const users = await User.find({});
+//     res.send(users);
+//   } catch (e) {
+//     res.status(500).send();
+//   }
+// });
 
-// router.get("/users/me", auth, async (req, res) => {
-//   res.send(req.user)
-//  });
+router.get("/users/me", auth, async (req, res) => {
+  res.send(req.user)
+ });
 
 // Read a user
 router.get("/users/:id", async (req, res) => {
@@ -101,5 +101,4 @@ const user = await User.findByIdAndDelete(req.params.id);
 });
 
 module.exports = router;
-
 

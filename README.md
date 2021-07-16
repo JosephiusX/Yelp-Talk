@@ -199,3 +199,28 @@ accepting authentication tokens
         
         requir jsonwebtoken in auth middleware file
         require user model as well
+        
+setting up postman environment 
+
+        created talk api environment
+        in env setup url variable
+        
+        except for the login and create user routes we set auth type to inherit from parent
+        
+        edit talk app to have auth type Bearer Token and a token variable {{authToken}}
+        
+        in login and create user test we set the value of authToken to be the value of the authentication token from the most recent login. 
+        
+        login test script:
+        
+        if (pm.response.code === 200) {
+                pm.environment.set('authToken', pm.response.json().token)
+        }
+        
+        Create test script:
+        
+        if (pm.response.code === 201) {
+                pm.environment.set('authToken', pm.response.json().token)
+        }
+        
+logging out
