@@ -228,3 +228,5 @@ logging out
         add request token to the auth logic for use later
         
         setup users/logout route
+        
+hiding private data
