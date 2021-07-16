@@ -165,3 +165,37 @@ next step is to get login setup
        then with the credentials log in that user to test the login route
 
 
+setting up JSON web tokens
+
+        npm i jsonwebtoken
+
+        setup generateAuthToken middleware in user routes
+        require jsonwebtokens in user routes
+
+        setup auth token in user route
+
+        test with postman login route
+
+        we have user tokens 
+
+        now we whan to store tokens we generate as part of the user document
+                add tokens object to user model
+                        in it we make a single field called token
+
+        test login again with postman.
+
+        ITS ALIVE!
+        
+accepting authentication tokens
+
+        makdir middleware
+        in it touch auth.js
+        
+        write middleware auth function
+        export auth function
+        
+        require that function in user routess
+        include auth in routes that need authentication
+        
+        requir jsonwebtoken in auth middleware file
+        require user model as well

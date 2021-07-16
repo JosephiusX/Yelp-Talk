@@ -1,6 +1,7 @@
-const e = require("express");
+
 const express = require("express");
 const User = require("../models/user"); // require comment schema file from models dir
+const auth = require('../middleware/auth')
 const router = new express.Router();
 
 // create user
@@ -18,14 +19,15 @@ router.post("/users", async (req, res) => {
 router.post("/users/login", async (req, res) => {
   try {
     const user = await User.findByCredentials(req.body.email, req.body.password) // runs the middleware in models with thease arguments
-    res.send(user)
+    const token = await user.generateAuthToken()
+    res.send({ user, token})
   } catch (e) {
     res.status(400).send()
   }
 })
 
 // Read users
-router.get("/users", async (req, res) => {
+router.get("/users", auth, async (req, res) => {
   try {
     const users = await User.find({});
     res.send(users);
@@ -33,6 +35,10 @@ router.get("/users", async (req, res) => {
     res.status(500).send();
   }
 });
+
+// router.get("/users/me", auth, async (req, res) => {
+//   res.send(req.user)
+//  });
 
 // Read a user
 router.get("/users/:id", async (req, res) => {
@@ -82,7 +88,7 @@ router.patch("/users/:id", async (req, res) => {
 // Delete user
 router.delete("/users/:id", async (req, res) => {
   try {
-    const user = await User.findByIdAndDelete(req.params.id);
+const user = await User.findByIdAndDelete(req.params.id);
 
     if (!user) {
       return res.status(404).send();
@@ -95,4 +101,5 @@ router.delete("/users/:id", async (req, res) => {
 });
 
 module.exports = router;
+
 

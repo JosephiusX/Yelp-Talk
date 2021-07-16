@@ -1,0 +1,5 @@
+{
+    "diffEditor.ignoreTrimWhitespace": false,
+    "prettier.printWidth": 120,
+    "files.autoSave": "onFocusChange"
+}
