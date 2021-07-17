@@ -263,6 +263,8 @@ setting up try catch for my topic routes
       
       ?????? not sure how to test put /topics/:id
       
+setting up try catch for my phrase routes
+      
       
         
 The User/Topic Relationship

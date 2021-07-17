@@ -8,11 +8,6 @@ router.post("/topics/new", async (req, res) => {
   const topic = new Topic(req.body); // name info in req.body topic
   
   try { // try the await
-    
-    if(!topic) { // if topic is false
-      return res.status(400).send() // return error to be caught
-    } // otherwise
-    
     await topic.save(); // save topic
     res.redirect(`/topics/${topic._id}`); // redirect to topic by id pag
   } catch (e) {
@@ -24,11 +19,6 @@ router.post("/topics/new", async (req, res) => {
 router.get("/topics", async (req, res) => {
   try {
     const topics = await Topic.find({}); // find topics from database
-    
-    if(!topics) { // if topic is false
-      return res.status(400).send() // return error to be caught
-    } // otherwise
-    
     res.render("topics/index", { topics }); // index.ejs, giving access to topics obj
   } catch (e) {
     res.status(400).send(e);
@@ -44,11 +34,6 @@ router.get("/topics/new", (req, res) => {
 router.get("/topics/:id", async (req, res) => {
   try {
     const topic = await Topic.findById(req.params.id); // find the topic with this id
-    
-    if(!topic) { // if topic is false
-      return res.status(400).send() // return error to be caught
-    } // otherwise
-    
     res.render("topics/show", { topic }); // show.ejs , gives accdss to phrase obj
   } catch (e) {
     res.status(400).send(e);
@@ -60,11 +45,6 @@ router.get("/topics/:id", async (req, res) => {
 router.get("/topics/:id/edit", async (req, res) => {
   try {
     const topic = await Topic.findById(req.params.id); // find a topic with this id
-    
-    if(!topic) { // if topic is false
-      return res.status(400).send() // return error to be caught
-    } // otherwise
-    
     res.render("topics/edit", { topic });
   } catch  (e) {
     res.status(400).send(e);
@@ -79,11 +59,6 @@ router.put("/topics/:id", async (req, res) => {
   
   try {
     const topic = await Topic.findByIdAndUpdate(id, { ...req.body.topic });
-    
-    if(!id) { // if id is false
-      return res.status(400).send() // return error to be caught
-    } // otherwise
-    
     res.redirect(`/topics/${topic._id}`);
   } catch (e) {
     res.status(400).send(e);
@@ -124,11 +99,6 @@ router.delete("/topics/:id", async (req, res) => {
   
   try {
     await Topic.findByIdAndDelete(id);
-    
-    if(!id) { // if id is false
-      return res.status(400).send() // return error to be caught
-    } // otherwise
-    
     res.redirect("/topics");
     
   } catch(e) {

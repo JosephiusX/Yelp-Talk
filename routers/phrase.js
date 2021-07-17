@@ -7,7 +7,11 @@ const router = new express.Router();
 router.post("/phrases/new", async (req, res) => {
   const phrase = new Phrase(req.body);
   try {
+    
     await phrase.save(); // save phrase to db
+    
+    
+    
     res.status(201).redirect(`/phrases/${phrase._id}`); // redirects to phrase with the id we just created
   } catch (e) {
     res.status(400).send(e);
