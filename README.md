@@ -243,7 +243,7 @@ authenticating User endpoints
 
         remove get /users/:id route
         
-        add aut middleware to delete /users/:id 
+        add auth middleware to delete /users/:id 
         change path to /users/me
         instead of req.params.id , req.user._id
         or
@@ -255,7 +255,7 @@ authenticating User endpoints
         add auth to route
         
         change instances of user to req.user
-        remove if(!user block)
+        remove if(!user) block
         
 setting up try catch for my topic routes
         
@@ -264,8 +264,15 @@ setting up try catch for my topic routes
       ?????? not sure how to test put /topics/:id
       
 setting up try catch for my phrase routes
+
+        set up owner on topic schema
+        require auth middleware in topic router
+        
       
       
         
 The User/Topic Relationship
+
+        ??????????????? no token shown when user created  probally why auth isint working for anything 
+        ************ i neglected to generate auth token when i added try catch to create user route - issue resolved
         

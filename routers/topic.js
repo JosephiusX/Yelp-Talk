@@ -4,8 +4,11 @@ const auth = require('../middleware/auth')
 const router = new express.Router();
 
 // creating a new topic
-router.post("/topics/new", async (req, res) => {
-  const topic = new Topic(req.body); // name info in req.body topic
+router.post("/topics", auth, async (req, res) => {
+  const topic = new Topic({
+    ...req.body, // instead of just adding req.body
+    owner: req.user._id // we add owner id as well
+  })
   
   try { // try the await
     await topic.save(); // save topic

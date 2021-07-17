@@ -7,12 +7,11 @@ const TopicSchema = new Schema({
     required: true,
     unique: true,
     trim: true
+  },
+  owner: { // topic owner
+    type: mongoose.Schema.Types.ObjectId, // data stored in woner will be an object id
+    required: true
   }
-  // ,
-  // owner: {
-  //   type: mongoose.Schema.Types.ObjectId,
-  //   required: true
-  // }
 });
 
 module.exports = mongoose.model("Topic", TopicSchema);
