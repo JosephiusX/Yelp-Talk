@@ -53,25 +53,10 @@ router.get("/users/me", auth, async (req, res) => {
   res.send(req.user)
  });
 
-// Read a user
-router.get("/users/:id", async (req, res) => {
-  const _id = req.params.id;
 
-  try {
-    const user = await User.findById(_id);
 
-    if (!user) {
-      return res.status(404).send();
-    }
-
-    res.send(user);
-  } catch (e) {
-    res.status(500).send();
-  }
-});
-
-// Update user
-router.patch("/users/:id", async (req, res) => {
+// Update user by id
+router.patch("/users/me", auth, async (req, res) => {
   const updates = Object.keys(req.body); // convert our req.body object into an array of properties
   const allowedUpdates = ["name", "email", "password", "age"]; // what is allowed to be updated
   const isValidOperation = updates.every((update) => allowedUpdates.includes(update)); // can the updates be found in allowed updates
@@ -83,31 +68,22 @@ router.patch("/users/:id", async (req, res) => {
 
   try {
     // thease 2 lines do the same as the one line below but dynamic so that it works even if the keys change over time
-    const user = await User.findById(req.params.id);
-    updates.forEach((update) => user[update] = req.body[update]);
-    await user.save()
+    
+    updates.forEach((update) => req.user[update] = req.body[update]);
+    await req.user.save()
     // const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
 
-    if (!user) {
-      return res.status(404).send();
-    }
-
-    res.send(user);
+    res.send(req.user);
   } catch (e) {
     res.status(400).send(e);
   }
 });
 
-// Delete user
-router.delete("/users/:id", async (req, res) => {
+// Delete user by id
+router.delete("/users/me", auth, async (req, res) => {
   try {
-const user = await User.findByIdAndDelete(req.params.id);
-
-    if (!user) {
-      return res.status(404).send();
-    }
-
-    res.send(user);
+    await req.user.remove()
+    res.send(req.user);
   } catch (e) {
     res.status(500).send();
   }

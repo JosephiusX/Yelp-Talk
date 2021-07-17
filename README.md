@@ -239,3 +239,21 @@ hiding private data
         and rename the method toJSON
         it still works and works for Read Profile as well
         
+authenticating User endpoints
+
+        remove get /users/:id route
+        
+        add aut middleware to delete /users/:id 
+        change path to /users/me
+        instead of req.params.id , req.user._id
+        or
+        replace the whole try block with :
+                await req.user.remove()
+                res.send(req.user);
+                
+        change user patch route to /users/me
+        add auth to route
+        
+        change instances of user to req.user
+        remove if(!user block)
+        
