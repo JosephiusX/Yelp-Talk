@@ -12,7 +12,7 @@ router.post("/topics", auth, async (req, res) => {
   
   try { // try the await
     await topic.save(); // save topic
-    res.redirect(`/topics/${topic._id}`); // redirect to topic by id pag
+    res.status(201).send(topic)
   } catch (e) {
     res.status(400).send(e);
   }

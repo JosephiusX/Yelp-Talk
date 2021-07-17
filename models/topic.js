@@ -10,7 +10,8 @@ const TopicSchema = new Schema({
   },
   owner: { // topic owner
     type: mongoose.Schema.Types.ObjectId, // data stored in woner will be an object id
-    required: true
+    required: true,
+    ref: 'User'
   }
 });
 

@@ -259,9 +259,11 @@ authenticating User endpoints
         
 setting up try catch for my topic routes
         
-      ???????  /topics/:id is returning empty object for some reason ********** misspelled topic
+      ???????  /topics/:id is returning empty object for some reason 
+      ********** misspelled topic
       
       ?????? not sure how to test put /topics/:id
+      
       
 setting up try catch for my phrase routes
 
@@ -276,3 +278,10 @@ The User/Topic Relationship
         ??????????????? no token shown when user created  probally why auth isint working for anything 
         ************ i neglected to generate auth token when i added try catch to create user route - issue resolved
         
+        audate send to send the topic :
+                    res.status(201).send(topic)
+                    
+        in topic model add ref to user:
+                ref: 'User'
+                
+        add virtual attribute to user schema

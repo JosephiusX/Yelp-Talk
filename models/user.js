@@ -45,6 +45,12 @@ const userSchema = new Schema({
   ]
 });
 
+userSchema.virtual('topic', {
+  ref: 'Topic',
+  localField: '_id',
+  foreignField: 'owner'
+})
+
 userSchema.methods.toJSON = function () { // reg func for use of 'this' keyword
   const user = this
   const userObject = user.toObject()
