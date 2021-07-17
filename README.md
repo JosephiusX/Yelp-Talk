@@ -257,3 +257,13 @@ authenticating User endpoints
         change instances of user to req.user
         remove if(!user block)
         
+setting up try catch for my topic routes
+        
+      ???????  /topics/:id is returning empty object for some reason ********** misspelled topic
+      
+      ?????? not sure how to test put /topics/:id
+      
+      
+        
+The User/Topic Relationship
+        
