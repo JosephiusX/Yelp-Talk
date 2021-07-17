@@ -45,6 +45,16 @@ const userSchema = new Schema({
   ]
 });
 
+userSchema.methods.toJSON = function () { // reg func for use of 'this' keyword
+  const user = this
+  const userObject = user.toObject()
+  
+  delete userObject.password
+  delete userObject.tokens
+  
+  return userObject
+}
+
 userSchema.methods.generateAuthToken = async function () { // reg function for this keyword
   const user = this
   const token = jwt.sign({_id: user._id.toString() },'thisismynewcourse')

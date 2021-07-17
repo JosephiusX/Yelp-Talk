@@ -78,3 +78,16 @@ app.listen(port, () => {
 //     next() // lets express know that we are done running middleware
 //   }
 // })
+
+
+/////////////////////////// understanding toJSON
+
+// const pet = {
+//   name: 'Hal'
+// }
+
+// pet.toJSON = function () {
+//   return {}
+// }
+
+// console.log(JSON.stringify(pet))

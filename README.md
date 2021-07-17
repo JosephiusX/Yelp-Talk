@@ -230,3 +230,12 @@ logging out
         setup users/logout route
         
 hiding private data
+
+        in user model file setup getPublicProfile() method
+        use it in the users login route by adding getPublicProfile() to user in the send statement
+                user.getPublcProfile
+                
+        OR remove getPubliicPrifile() from the route.
+        and rename the method toJSON
+        it still works and works for Read Profile as well
+        
