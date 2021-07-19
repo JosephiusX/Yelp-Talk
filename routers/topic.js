@@ -4,7 +4,7 @@ const auth = require('../middleware/auth');
 const router = new express.Router();
 
 // creating a new topic
-router.post("/topics", auth, async (req, res) => {
+router.post('/topics', auth, async (req, res) => {
   const topic = new Topic({
     ...req.body, // instead of just adding req.body
     owner: req.user._id // we add owner id as well
@@ -14,31 +14,30 @@ router.post("/topics", auth, async (req, res) => {
     await topic.save(); // save topic
     res.status(201).send(topic)
   } catch (e) {
-    res.status(400).send(e);
+    res.status(400).send();
   }
 });
 
 //  Read all topics
-router.get("/topics", async (req, res) => {
+router.get("/topics", auth,  async (req, res) => {
   try {
-    const topics = await Topic.find({}); // find topics from database
-    res.render("topics/index", { topics }); // index.ejs, giving access to topics obj
+    await req.user.populate('topic').execPopulate() 
+    res.send(req.user.topic) 
   } catch (e) {
-    res.status(400).send(e);
+    res.status(500).send(e);
   }
 });
 
-// takes me to new.ejs
-router.get("/topics/new", (req, res) => {
-  res.render("topics/new"); // new.ejs
-});
+// // takes me to new.ejs
+// router.get("/topics/new", (req, res) => {
+//   res.render("topics/new"); // new.ejs
+// });
 
 // show route
 router.get("/topics/:id", auth, async (req, res) => {
   const _id = req.params.id;
   
   try {
-    // const topic = await Topic.findById(req.params.id); // find the topic with this id
     const topic = await Topic.findOne({ _id, owner: req.user._id})
     
     if(!topic) {
@@ -80,7 +79,7 @@ router.put("/topics/:id", async (req, res) => {
 });
 
 // Update topic by id
-router.patch("/topics/:id", async (req, res) => {
+router.patch("/topics/:id", auth, async (req, res) => {
   const updates = Object.keys(req.body);
   const allowedUpdates = ["topic"];
   const isValidOperation = updates.every((update) => allowedUpdates.includes(update));
@@ -90,14 +89,16 @@ router.patch("/topics/:id", async (req, res) => {
   }
 
   try {
-    const topic = await Topic.findById(req.params.id);
-    updates.forEach((update) => topic[update] = req.body[update])
-    await topic.save()
+    const topic = await Topic.findOne({ _id: req.params.id, owner: req.user._id})
+    // const topic = await Topic.findById(req.params.id);
     // const topic = await Topic.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true }); // the 3rd arg is the options, new: true - returns the new , runValidators: true - makesure format is right
-
+    
     if (!topic) {
       return res.status(404).send();
     }
+    
+    updates.forEach((update) => topic[update] = req.body[update])
+    await topic.save()
 
     res.send(topic);
   } catch (e) {
@@ -106,12 +107,17 @@ router.patch("/topics/:id", async (req, res) => {
 });
 
 // delete topic by id
-router.delete("/topics/:id", async (req, res) => {
-  const { id } = req.params; // destructuring id out of req.params
+router.delete("/topics/:id", auth,  async (req, res) => {
+  // const { id } = req.params; // destructuring id out of req.params
   
   try {
-    await Topic.findByIdAndDelete(id);
-    res.redirect("/topics");
+    const topic = await Topic.findByOneAndDelete({ _id: req.params.id, owner: req.user._id});
+    
+    if(!topic) {
+      res.status(404).send()
+    }
+    
+    res.send(topic)
     
   } catch(e) {
     res.status(400).send(e);

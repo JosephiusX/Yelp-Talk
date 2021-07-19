@@ -29,8 +29,7 @@ app.use(phraseRouter);
 app.use(userRouter);
 app.use(topicRouter);
 
-app.get("/", (req, res) => {
-  // home route
+app.get("/", (req, res) => {// home route
   res.render("home"); // home.ejs
 });
 

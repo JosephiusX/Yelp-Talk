@@ -286,12 +286,19 @@ The User/Topic Relationship
                 
         add virtual attribute to user schema
         
-Authenticating task endpoints
+Authenticating topics endpoints
 
-        add auth to /tasks/:id :
+        add auth to /topics/:id :
                 now users can only lookup tasks that they created
         
-        left off at 6:01
+        add auth to get /topics route
+                only read topic if it belongs to logged in user
+        
+        add auth to post /topics/:id
+                only update if it belongs to logged in user
+        
+        add auth to delete /topics/:id
+                only delete if it belongs to logged in user
         
         
         
