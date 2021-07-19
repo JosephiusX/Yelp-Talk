@@ -278,10 +278,45 @@ The User/Topic Relationship
         ??????????????? no token shown when user created  probally why auth isint working for anything 
         ************ i neglected to generate auth token when i added try catch to create user route - issue resolved
         
-        audate send to send the topic :
+        update send to send the topic :
                     res.status(201).send(topic)
                     
         in topic model add ref to user:
                 ref: 'User'
                 
         add virtual attribute to user schema
+        
+Authenticating task endpoints
+
+        add auth to /tasks/:id :
+                now users can only lookup tasks that they created
+        
+        left off at 6:01
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+how to assign a phrase to a selected topic idea
+
+        i will need topicIsSelected() middleware 
+                topicIsSelected() {
+                        if topic show page is selected
+                        set the owner of the phrase to be the topic 
+                }
+        
+        I will need to setup a topic/phrase one to many relationship.
+        
+        

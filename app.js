@@ -94,19 +94,20 @@ app.listen(port, () => {
 
 /////////////////////////// understanding relationships
 
-const Topic = require('./models/topic')
-const User = require('./models/user')
+// const Topic = require('./models/topic')
+// const User = require('./models/user')
 
-const main = async () => {
-  // const topic = await Topic.findById('60f3194776ea43e890481d45')
-  // await topic.populate('owner').execPopulate() // populates owner object instead of just id
-  // console.log(topic.owner)
+// const main = async () => {
+//   // const topic = await Topic.findById('60f3194776ea43e890481d45')
+//   // await topic.populate('owner').execPopulate() // populates owner object instead of just id
+//   // console.log(topic.owner)
   
-  const user = await User.findById('60f315e1722705dc8cf1d435')
-  await user.populate('topic').execPopulate()
-  console.log(user.topic);
+//   const user = await User.findById('60f315e1722705dc8cf1d435')
+//   await user.populate('topic').execPopulate()
+//   console.log(user.topic);
   
   
-}
+// }
 
-main()
+// main()
+

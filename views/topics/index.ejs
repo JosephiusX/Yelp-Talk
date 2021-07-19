@@ -15,9 +15,10 @@
     <ul>
       <% for (let topic of topics) {%>
       <li>
-        <a href="/topics/<%= topic._id %>"><%= topic.topic%></a>
+        <a href="/topics/<%= topic._id %>"><%= topic.topic%><%= topic.owner%></a>
       </li>
       <% } %>
+      
     </ul>
   </body>
 </html>

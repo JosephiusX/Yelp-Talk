@@ -1,6 +1,6 @@
 const express = require("express");
 const Topic = require("../models/topic"); // require comment schema file from models dir
-const auth = require('../middleware/auth')
+const auth = require('../middleware/auth');
 const router = new express.Router();
 
 // creating a new topic
@@ -34,10 +34,19 @@ router.get("/topics/new", (req, res) => {
 });
 
 // show route
-router.get("/topics/:id", async (req, res) => {
+router.get("/topics/:id", auth, async (req, res) => {
+  const _id = req.params.id;
+  
   try {
-    const topic = await Topic.findById(req.params.id); // find the topic with this id
-    res.render("topics/show", { topic }); // show.ejs , gives accdss to phrase obj
+    // const topic = await Topic.findById(req.params.id); // find the topic with this id
+    const topic = await Topic.findOne({ _id, owner: req.user._id})
+    
+    if(!topic) {
+      return res.status(400).send()
+    }
+    
+    res.send(topic)
+    // res.render("topics/show", { topic }); // show.ejs , gives accdss to phrase obj
   } catch (e) {
     res.status(400).send(e);
   }

@@ -4,7 +4,7 @@ const Phrase = require("../models/phrase"); // require comment schema file from 
 const router = new express.Router();
 
 // create new phrase
-router.post("/phrases/new", async (req, res) => {
+router.post("/phrases", async (req, res) => {
   const phrase = new Phrase(req.body);
   try {
     await phrase.save(); // save phrase to db
