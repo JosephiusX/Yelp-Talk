@@ -4,9 +4,14 @@ const User = require("../models/user"); // require comment schema file from mode
 const auth = require('../middleware/auth')
 const router = new express.Router();
 
+// read register.ejs
+router.get('/register', async (req, res) => { // read route
+  res.render('users/register') // renders to register.ejs
+})
+
 // create user
-router.post("/users", async (req, res) => {
-  const user = new User(req.body);
+router.post("/register", async (req, res) => { // create /register
+  const user = new User(req.body); // 
 
   try {
     await user.save();
@@ -16,6 +21,10 @@ router.post("/users", async (req, res) => {
     res.status(400).send(e);
   }
 });
+
+router.get('/users/login', async (req, res) => {
+  res.render('users/login')
+})
 
 router.post("/users/login", async (req, res) => {
   try {

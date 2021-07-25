@@ -27,13 +27,14 @@ const userSchema = new Schema({
   password: {
     type: String,
     required: true,
-    trim: true,
-    minlength: 7,
-    validate(value) {
-      if (value.includes("password")) {
-        throw new Error("password cannot contain password");
-      }
-    }
+     trim: true
+    //,
+    // minlength: 7,
+    // validate(value) {
+    //   if (value.includes("password")) {
+    //     throw new Error("password cannot contain password");
+    //   }
+    //}
   },
   tokens: [
     {

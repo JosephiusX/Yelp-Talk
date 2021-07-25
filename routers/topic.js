@@ -3,8 +3,10 @@ const Topic = require("../models/topic"); // require comment schema file from mo
 const auth = require('../middleware/auth');
 const router = new express.Router();
 
+
+
 // creating a new topic
-router.post('/topics', auth, async (req, res) => {
+router.post('/topics', async (req, res) => { // removing auth for now
   const topic = new Topic({
     ...req.body, // instead of just adding req.body
     owner: req.user._id // we add owner id as well
@@ -19,10 +21,10 @@ router.post('/topics', auth, async (req, res) => {
 });
 
 //  Read all topics
-router.get("/topics", auth,  async (req, res) => {
+router.get("/topics",  async (req, res) => {
   try {
     await req.user.populate('topic').execPopulate() 
-    res.send(req.user.topic) 
+    res.render(req.user.topic) 
   } catch (e) {
     res.status(500).send(e);
   }

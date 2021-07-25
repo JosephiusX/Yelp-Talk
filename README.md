@@ -286,6 +286,14 @@ The User/Topic Relationship
                 
         add virtual attribute to user schema
         
+** Need to setup Topic/Phrase Relationship. 
+
+        add a field on a phrase that stores id of topic that created it. 
+
+
+
+
+        
 Authenticating topics endpoints
 
         add auth to /topics/:id :
@@ -299,7 +307,33 @@ Authenticating topics endpoints
         
         add auth to delete /topics/:id
                 only delete if it belongs to logged in user
+      
+ setting up users/register.ejs    
+ 
+        creater get /register route to show the register form on register.ejs
         
+        submit form post register 
+        
+        changed post /users to /register 
+        
+                now I can register in the browser
+
+setting up login form with route
+
+        made get /users/login route to show login.ejs which has a form that sends { user, token} to verify its working
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+        
+cascade delete tasks. 
         
         
         
