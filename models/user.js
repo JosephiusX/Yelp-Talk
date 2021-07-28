@@ -1,16 +1,13 @@
 const mongoose = require("mongoose");
-const Schema = mongoose.Schema; // set to variable for ease of use
 const validator = require("validator");
-const bcrypt = require("bcrypt");
-const jwt = require('jsonwebtoken')
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
-
-
-const userSchema = new Schema({
+const userSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
-    trim: true
+    trim: true,
   },
   email: {
     type: String,
@@ -22,12 +19,12 @@ const userSchema = new Schema({
       if (!validator.isEmail(value)) {
         throw new Error("Email is invalid");
       }
-    }
+    },
   },
   password: {
     type: String,
     required: true,
-     trim: true
+    trim: true,
     //,
     // minlength: 7,
     // validate(value) {
@@ -40,66 +37,68 @@ const userSchema = new Schema({
     {
       token: {
         type: String,
-        required: true
-      }
-    }
-  ]
+        required: true,
+      },
+    },
+  ],
 });
 
-userSchema.virtual('topic', {
-  ref: 'Topic',
-  localField: '_id',
-  foreignField: 'owner'
-})
+userSchema.virtual("topic", {
+  ref: "Topic",
+  localField: "_id",
+  foreignField: "owner",
+});
 
-userSchema.methods.toJSON = function () { // reg func for use of 'this' keyword
-  const user = this
-  const userObject = user.toObject()
-  
-  delete userObject.password
-  delete userObject.tokens
-  
-  return userObject
-}
+userSchema.methods.toJSON = function () {
+  // reg func for use of 'this' keyword
+  const user = this;
+  const userObject = user.toObject();
 
-userSchema.methods.generateAuthToken = async function () { // reg function for this keyword
-  const user = this
-  const token = jwt.sign({_id: user._id.toString() },'thisismynewcourse')
+  delete userObject.password;
+  delete userObject.tokens;
 
-  user.tokens = user.tokens.concat({token}) // the token property gets its value from token variable, shorthand ({ token })
-  await user.save()
+  return userObject;
+};
 
-  return token
-}
+userSchema.methods.generateAuthToken = async function () {
+  // reg function for this keyword
+  const user = this;
+  const token = jwt.sign({ _id: user._id.toString() }, "thisismynewcourse");
+
+  user.tokens = user.tokens.concat({ token }); // the token property gets its value from token variable, shorthand ({ token })
+  await user.save();
+
+  return token;
+};
 
 userSchema.statics.findByCredentials = async (email, password) => {
-  const user = await User.findOne({ email : email }) // find one user with an email that matches our email argument ({ email }) for short and set it a value of user
+  const user = await User.findOne({ email: email }); // find one user with an email that matches our email argument ({ email }) for short and set it a value of user
 
-  if(!user) { // if user is false send error
-    throw new Error('Unable to login')
+  if (!user) {
+    // if user is false send error
+    throw new Error("Unable to login");
   } // otherwise
 
-  const isMatch = await bcrypt.compare(password, user.password) // compare password with userpassword and set the value for isMatch boolean
+  const isMatch = await bcrypt.compare(password, user.password); // compare password with userpassword and set the value for isMatch boolean
 
-  if (!isMatch) { // if false
-    throw new Error('Unable to login') // for security message shouldnt be detailed
+  if (!isMatch) {
+    // if false
+    throw new Error("Unable to login"); // for security message shouldnt be detailed
   } // otherwise
 
-  return user // user email
-
-}
+  return user; // user email
+};
 
 // hash plain text password
 // mongoose middleware - automatically fires before user saves
 userSchema.pre("save", async function (next) {
-   const user = this; // makes it easier to understand
-    if (user.isModified('password')) {
-    user.password = await bcrypt.hash(user.password, 8)
+  const user = this; // makes it easier to understand
+  if (user.isModified("password")) {
+    user.password = await bcrypt.hash(user.password, 8);
   }
   next(); // have to call next to finish middleware
 });
 
 const User = mongoose.model("User", userSchema);
 
-module.exports = User
-
+module.exports = User;

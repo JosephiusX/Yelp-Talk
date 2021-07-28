@@ -148,7 +148,7 @@ now i need to refactor the topic and phrase update routes to be compatabe with m
         added this to phrase and topic update routes:
 
         const updates = Object.keys(req.body);
-        const allowedUpdates = ["name", "email", "password", "age"]; // edited this for phrase and topic 
+        const allowedUpdates = ["name", "email", "password", "age"]; // edited this for phrase and topic
         const isValidOperation = updates.every((update) => allowedUpdates.includes(update));
 
         not sure about what this code is doing
@@ -157,13 +157,12 @@ now i need to refactor the topic and phrase update routes to be compatabe with m
 
 next step is to get login setup
 
-       in my user schema model i setup UserSchema.statics.findByCredentials middleware 
+       in my user schema model i setup UserSchema.statics.findByCredentials middleware
        setup /users/login and use function above
 
        set login route in postman for testing
        drop users in db and create a new user
        then with the credentials log in that user to test the login route
-
 
 setting up JSON web tokens
 
@@ -176,7 +175,7 @@ setting up JSON web tokens
 
         test with postman login route
 
-        we have user tokens 
+        we have user tokens
 
         now we whan to store tokens we generate as part of the user document
                 add tokens object to user model
@@ -185,179 +184,182 @@ setting up JSON web tokens
         test login again with postman.
 
         ITS ALIVE!
-        
+
+
 accepting authentication tokens
 
         makdir middleware
         in it touch auth.js
-        
+
         write middleware auth function
         export auth function
-        
+
         require that function in user routess
         include auth in routes that need authentication
-        
+
         requir jsonwebtoken in auth middleware file
         require user model as well
-        
-setting up postman environment 
+
+
+setting up postman environment
 
         created talk api environment
         in env setup url variable
-        
+
         except for the login and create user routes we set auth type to inherit from parent
-        
+
         edit talk app to have auth type Bearer Token and a token variable {{authToken}}
-        
-        in login and create user test we set the value of authToken to be the value of the authentication token from the most recent login. 
-        
+
+        in login and create user test we set the value of authToken to be the value of the authentication token from the most recent login.
+
         login test script:
-        
+
         if (pm.response.code === 200) {
                 pm.environment.set('authToken', pm.response.json().token)
         }
-        
+
         Create test script:
-        
+
         if (pm.response.code === 201) {
                 pm.environment.set('authToken', pm.response.json().token)
         }
-        
+
+
 logging out
 
         add request token to the auth logic for use later
-        
+
         setup users/logout route
-        
+
+
 hiding private data
 
         in user model file setup getPublicProfile() method
         use it in the users login route by adding getPublicProfile() to user in the send statement
                 user.getPublcProfile
-                
+
         OR remove getPubliicPrifile() from the route.
         and rename the method toJSON
         it still works and works for Read Profile as well
-        
+
+
 authenticating User endpoints
 
         remove get /users/:id route
-        
-        add auth middleware to delete /users/:id 
+
+        add auth middleware to delete /users/:id
         change path to /users/me
         instead of req.params.id , req.user._id
         or
         replace the whole try block with :
                 await req.user.remove()
                 res.send(req.user);
-                
+
         change user patch route to /users/me
         add auth to route
-        
+
         change instances of user to req.user
         remove if(!user) block
-        
+
+
 setting up try catch for my topic routes
-        
-      ???????  /topics/:id is returning empty object for some reason 
+
+      ???????  /topics/:id is returning empty object for some reason
       ********** misspelled topic
-      
+
       ?????? not sure how to test put /topics/:id
-      
-      
+
+
+
 setting up try catch for my phrase routes
 
         set up owner on topic schema
         require auth middleware in topic router
-        
-      
-      
-        
+
+
+
+
+
 The User/Topic Relationship
 
-        ??????????????? no token shown when user created  probally why auth isint working for anything 
+        ??????????????? no token shown when user created  probally why auth isint working for anything
         ************ i neglected to generate auth token when i added try catch to create user route - issue resolved
-        
+
         update send to send the topic :
                     res.status(201).send(topic)
-                    
+
         in topic model add ref to user:
                 ref: 'User'
-                
+
         add virtual attribute to user schema
-        
-** Need to setup Topic/Phrase Relationship. 
-
-        add a field on a phrase that stores id of topic that created it. 
 
 
+\*\* Need to setup Topic/Phrase Relationship.
+
+        add a field on  phrase model that stores id of topic that created it.
+
+        in the phrase router we change the post /phrase endpoint
+                ?? load in auth middleware and add it to post phrase route
+
+        change the way a phrase is created
 
 
-        
+
+
+
 Authenticating topics endpoints
 
         add auth to /topics/:id :
                 now users can only lookup tasks that they created
-        
+
         add auth to get /topics route
                 only read topic if it belongs to logged in user
-        
+
         add auth to post /topics/:id
                 only update if it belongs to logged in user
-        
+
         add auth to delete /topics/:id
                 only delete if it belongs to logged in user
-      
- setting up users/register.ejs    
- 
+
+
+setting up users/register.ejs
+
         creater get /register route to show the register form on register.ejs
-        
-        submit form post register 
-        
-        changed post /users to /register 
-        
+
+        submit form post register
+
+        changed post /users to /register
+
                 now I can register in the browser
 
 setting up login form with route
 
         made get /users/login route to show login.ejs which has a form that sends { user, token} to verify its working
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-        
-cascade delete tasks. 
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+
+
+
+
+
+
+
+
+
+
+
+
+
+cascade delete tasks.
+
 how to assign a phrase to a selected topic idea
 
-        i will need topicIsSelected() middleware 
+        i will need topicIsSelected() middleware
                 topicIsSelected() {
                         if topic show page is selected
-                        set the owner of the phrase to be the topic 
+                        set the owner of the phrase to be the topic
                 }
-        
+
         I will need to setup a topic/phrase one to many relationship.
-        
-        
+
+        ill need a token to determine weather or not im logged into the the topic im writing a phrase for
+
+

@@ -10,13 +10,11 @@ const topicRouter = require("./routers/topic");
 const port = process.env.PORT || 3000;
 const app = express();
 
-
 const db = mongoose.connection; // mongoose connection
 db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", () => {
   console.log("Database connected");
 });
-
 
 app.set("view engine", "ejs"); // set view engine to ejs
 app.set("views", path.join(__dirname, "views")); // sets path to absolute
@@ -29,7 +27,8 @@ app.use(phraseRouter);
 app.use(userRouter);
 app.use(topicRouter);
 
-app.get("/", (req, res) => {// home route
+app.get("/", (req, res) => {
+  // home route
   res.render("home"); // home.ejs
 });
 
@@ -57,7 +56,7 @@ app.listen(port, () => {
 // const jwt = require('jsonwebtoken')
 
 // const myToken = async () => {
-//   // create auth token 
+//   // create auth token
 //   const token = jwt.sign({_id: 'abc123' }, 'thisismynewcourse', { expiresIn: '7 days'})
 //   console.log(token)
 
@@ -77,7 +76,6 @@ app.listen(port, () => {
 //     next() // lets express know that we are done running middleware
 //   }
 // })
-
 
 /////////////////////////// understanding toJSON
 
@@ -100,17 +98,11 @@ app.listen(port, () => {
 //   // const topic = await Topic.findById('60f3194776ea43e890481d45')
 //   // await topic.populate('owner').execPopulate() // populates owner object instead of just id
 //   // console.log(topic.owner)
-  
+
 //   const user = await User.findById('60f315e1722705dc8cf1d435')
 //   await user.populate('topic').execPopulate()
 //   console.log(user.topic);
-  
-  
+
 // }
 
 // main()
-
-{
-  
-  
-}

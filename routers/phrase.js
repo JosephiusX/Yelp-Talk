@@ -2,10 +2,16 @@ const express = require("express");
 const Phrase = require("../models/phrase"); // require comment schema file from models dir
 // const User = require("../models/user");
 const router = new express.Router();
+const auth = require('../middleware/auth')
 
 // create new phrase
-router.post("/phrases", async (req, res) => {
-  const phrase = new Phrase(req.body);
+router.post("/phrases", auth, async (req, res) => {
+  // const phrase = new Phrase(req.body);
+  const phrase = new Phrase({
+    ...req.body,
+    owner: req.topic._id
+  })
+  
   try {
     await phrase.save(); // save phrase to db
     res.status(201).redirect(`/phrases/${phrase._id}`); // redirects to phrase with the id we just created
